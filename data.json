@@ -1,0 +1,148 @@
+Here is the given data converted to JSON format:
+
+```json
+{
+  "termsOfUse": "https://www.ryanair.com/ie/en/corporate/terms-of-use=AGREED",
+  "currency": "MAD",
+  "currPrecision": 2,
+  "routeGroup": "",
+  "tripType": "CITY_BREAK",
+  "upgradeType": "PLUS",
+  "trips": [
+    {
+      "origin": "AGA",
+      "originName": "Agadir",
+      "destination": "TNG",
+      "destinationName": "Tangier",
+      "routeGroup": "",
+      "tripType": "CITY_BREAK",
+      "upgradeType": "PLUS",
+      "dates": [
+        {
+          "dateOut": "2024-06-20T00:00:00.000",
+          "flights": []
+        },
+        {
+          "dateOut": "2024-06-21T00:00:00.000",
+          "flights": []
+        },
+        {
+          "dateOut": "2024-06-22T00:00:00.000",
+          "flights": [
+            {
+              "faresLeft": -1,
+              "flightKey": "FR~6687~ ~~AGA~06/22/2024 15:30~TNG~06/22/2024 17:05~~",
+              "infantsLeft": 17,
+              "regularFare": {
+                "fareKey": "SFUSVPES244YNXTH3QXUSQHANH77PES5WB5MMDI2LENAPOCNFW2RINAAMFW3YBZJWSVNHYNYT6VDRU7VWVQS2SRSL3MQAWCQYUBUF2N2VLGJJC46QF7R7MVBZSIXBYEY7RJMRWJEQRVIEOEQZYZCMONK3ZTT7LEBPXUGPN7KI7QBU4T3VDEWKAKEGA5ZBHJBLFZZWA5E3PJZOA5G4MANUQR6MACAYY234LGVFHMCESW3MCENCOYDQOKWYKCX4RTYZ4LC6LYCYGZ3XFACMSHQF5NMSY",
+                "fareClass": "J",
+                "fares": [
+                  {
+                    "type": "ADT",
+                    "amount": 438.63,
+                    "count": 1,
+                    "hasDiscount": false,
+                    "publishedFare": 438.63,
+                    "discountInPercent": 0,
+                    "hasPromoDiscount": false,
+                    "discountAmount": 0.0,
+                    "hasBogof": false
+                  }
+                ]
+              },
+              "operatedBy": "",
+              "segments": [
+                {
+                  "segmentNr": 0,
+                  "origin": "AGA",
+                  "destination": "TNG",
+                  "flightNumber": "FR 6687",
+                  "time": [
+                    "2024-06-22T15:30:00.000",
+                    "2024-06-22T17:05:00.000"
+                  ],
+                  "timeUTC": [
+                    "2024-06-22T14:30:00.000Z",
+                    "2024-06-22T16:05:00.000Z"
+                  ],
+                  "duration": "01:35"
+                }
+              ],
+              "flightNumber": "FR 6687",
+              "time": [
+                "2024-06-22T15:30:00.000",
+                "2024-06-22T17:05:00.000"
+              ],
+              "timeUTC": [
+                "2024-06-22T14:30:00.000Z",
+                "2024-06-22T16:05:00.000Z"
+              ],
+              "duration": "01:35"
+            }
+          ]
+        },
+        {
+          "dateOut": "2024-06-23T00:00:00.000",
+          "flights": []
+        },
+        {
+          "dateOut": "2024-06-24T00:00:00.000",
+          "flights": [
+            {
+              "faresLeft": 4,
+              "flightKey": "FR~6687~ ~~AGA~06/24/2024 12:45~TNG~06/24/2024 14:20~~",
+              "infantsLeft": 15,
+              "regularFare": {
+                "fareKey": "2HHVNUXMONTWPSN4BBCSTCTGSI4VHDCK6HO2O2NKN3U7JAY7UCCMHVZ3OHVZ76OZQRUJJCLOHLHP43RZALFFZLXQQ4YEU3N3PCTK4E5GDZ5AMCAGPTP7JSXZS3Y43T5MEUFZMMAACM7L2SFE6LUVM2F6STIZJQ7N7E32B2PJKHTDX6OAKJA3SOD3X2PWCDYMR45BUKX4EEND2NYK4ISFU4RINLPO7OIOI3NTX4APDNKL65RASFEGC6LNKMPUTSZ2T5575UYFY3XSA4YELFXTWLMKIQ",
+                "fareClass": "W",
+                "fares": [
+                  {
+                    "type": "ADT",
+                    "amount": 376.34,
+                    "count": 1,
+                    "hasDiscount": false,
+                    "publishedFare": 376.34,
+                    "discountInPercent": 0,
+                    "hasPromoDiscount": false,
+                    "discountAmount": 0.0,
+                    "hasBogof": false
+                  }
+                ]
+              },
+              "operatedBy": "",
+              "segments": [
+                {
+                  "segmentNr": 0,
+                  "origin": "AGA",
+                  "destination": "TNG",
+                  "flightNumber": "FR 6687",
+                  "time": [
+                    "2024-06-24T12:45:00.000",
+                    "2024-06-24T14:20:00.000"
+                  ],
+                  "timeUTC": [
+                    "2024-06-24T11:45:00.000Z",
+                    "2024-06-24T13:20:00.000Z"
+                  ],
+                  "duration": "01:35"
+                }
+              ],
+              "flightNumber": "FR 6687",
+              "time": [
+                "2024-06-24T12:45:00.000",
+                "2024-06-24T14:20:00.000"
+              ],
+              "timeUTC": [
+                "2024-06-24T11:45:00.000Z",
+                "2024-06-24T13:20:00.000Z"
+              ],
+              "duration": "01:35"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "serverTimeUTC": "2024-06-11T14:52:27.010Z"
+}
+```datadata
