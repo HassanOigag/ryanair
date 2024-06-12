@@ -24,7 +24,7 @@ def insert_data(conn, data):
     conn.commit()
     cursor.close()
 
-def get_latest_flight_price(date, frm="AGA", to="TNG"):
+def get_latest_flight_price(conn, date, frm="AGA", to="TNG"):
     cursor = conn.cursor()
     query = "SELECT price FROM flights WHERE departure=%s AND arrival=%s AND flight_date=%s ORDER BY created_at DESC LIMIT 1"
     cursor.execute(query, (frm, to, date))

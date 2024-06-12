@@ -11,6 +11,17 @@ from db import connect_to_db, insert_data, get_latest_flight_price
 
 load_dotenv()
 
+db_config = {
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'database': os.getenv('DB_NAME')
+}
+
+TOKEN = os.getenv('TOKEN')
+CHAT_ID = os.getenv('CHAT_ID')
+bot = telebot.TeleBot(TOKEN)
+
 def init_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -31,9 +42,6 @@ def get_date(day, month, year):
     return f"{year}-{month}-{day}"
 
 
-TOKEN = os.getenv('TOKEN')
-CHAT_ID = os.getenv('CHAT_ID')
-bot = telebot.TeleBot(TOKEN)
 # site = "https://www.ryanair.com/api/booking/v4/en-gb/availability?ADT=1&TEEN=0&CHD=0&INF=0&Origin=TNG&Destination=AGA&promoCode=&IncludeConnectingFlights=false&DateOut=2024-06-15&DateIn=&FlexDaysBeforeOut=2&FlexDaysOut=2&FlexDaysBeforeIn=2&FlexDaysIn=2&RoundTrip=false&ToUs=AGREED"
 
 
@@ -86,8 +94,10 @@ def get_flight_price(date, frm="AGA", to="TNG"):
             return [price, flight_number]
     return None
 
-def pause(hours=0, seconds=60, minutes=0):
-    time.sleep(seconds * minutes * hours)
+
+
+def pauseMinutes(minutes):
+    time.sleep(60 * minutes)
 
 # def save_data_to_file(file, data: dict):
 #     with open(file, "a+") as file:
@@ -119,14 +129,16 @@ if __name__ == "__main__":
     frm = argv[4].upper()
     to = argv[5].upper()
     date = parse_date_input(argv[1:4])
-    conn  = connect_to_db()
+    conn  = connect_to_db(db_config)
     bot.send_message(CHAT_ID, f"Bot started listening for date {date} from {frm} to {to}")
     while True:
+        print("got price from site")
         price, flight_number = get_flight_price(date, frm=frm, to=to)
+        print("checking if price has changed")
+        last_price_added = get_latest_flight_price(conn, date, frm=frm, to=to)
+        if last_price_added != float(price):
+            bot.send_message(CHAT_ID, f"Price has changed from {last_price_added} to {price} for flight {flight_number} on {date}")
         data = (flight_number, frm, to, date, price)
         insert_data(conn, data)
         print(f"Price: {price}, Flight number: {flight_number} inserted into the database")
-        last_price_added = get_latest_flight_price(date, frm=frm, to=to)
-        if last_price_added != float(price):
-            bot.send_message(CHAT_ID, f"Price has changed from {last_price_added} to {price} for flight {flight_number} on {date}")
-        pause(minutes=30)
+        pauseMinutes(40)
