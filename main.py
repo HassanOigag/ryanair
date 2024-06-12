@@ -7,6 +7,8 @@ import telebot
 from datetime import datetime
 from dotenv import load_dotenv
 from sys import argv
+from db import connect_to_db, insert_data, get_latest_flight_price
+
 load_dotenv()
 
 def init_driver():
@@ -84,27 +86,31 @@ def get_flight_price(date, frm="AGA", to="TNG"):
             return [price, flight_number]
     return None
 
-def pause(hours=1, seconds=0, minutes=0):
-    time.sleep(60 * 60 * hours)
+def pause(hours=0, seconds=60, minutes=0):
+    time.sleep(seconds * minutes * hours)
 
-def save_data_to_file(file, data: dict):
-    with open(file, "a+") as file:
-        #check if file is empty
-        file.seek(0)
-        char = file.read(1)
-        file.seek(0, 2)
-        if not char:
-            file.write("current_date,flight_number, price, date, from, to\n")
-        else:
-            current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            file.write(f"{current_date}, {data['flight_number']}, {data['price']}, {data['date']}, {data['from']}, {data['to']}\n")
+# def save_data_to_file(file, data: dict):
+#     with open(file, "a+") as file:
+#         #check if file is empty
+#         file.seek(0)
+#         char = file.read(1)
+#         file.seek(0, 2)
+#         if not char:
+#             file.write("current_date,flight_number, price, date, from, to\n")
+#         else:
+#             current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#             file.write(f"{current_date}, {data['flight_number']}, {data['price']}, {data['date']}, {data['from']}, {data['to']}\n")
 
-def get_the_last_price_from_file():
-    with open("file.csv", "r") as file:
-        lines = file.readlines()
-        last_line = lines[-1]
-        data = last_line.split(", ")
-        return float(data[2])
+# def get_the_last_price_from_file(date):
+#     with open("file.csv", "r") as file:
+#         #get the last line o date
+#         lines = file.readlines()
+#         lines_for_Date = [line for line in lines if date in line]
+#         last_line = lines_for_Date[-1]
+#         price = last_line.split(",")[2]
+#         return float(price)
+
+
 
 if __name__ == "__main__":
     if len(argv) != 6:
@@ -113,17 +119,14 @@ if __name__ == "__main__":
     frm = argv[4].upper()
     to = argv[5].upper()
     date = parse_date_input(argv[1:4])
+    conn  = connect_to_db()
     bot.send_message(CHAT_ID, f"Bot started listening for date {date} from {frm} to {to}")
     while True:
         price, flight_number = get_flight_price(date, frm=frm, to=to)
-        save_data_to_file("file.csv", {
-            "flight_number": flight_number,
-            "price": price,
-            "date": date,
-            "from": "AGA",
-            "to": "TNG"
-        })
-        last_price_added = get_the_last_price_from_file()
-        if last_price_added != price:
+        data = (flight_number, frm, to, date, price)
+        insert_data(conn, data)
+        print(f"Price: {price}, Flight number: {flight_number} inserted into the database")
+        last_price_added = get_latest_flight_price(date, frm=frm, to=to)
+        if last_price_added != float(price):
             bot.send_message(CHAT_ID, f"Price has changed from {last_price_added} to {price} for flight {flight_number} on {date}")
-        pause(hours=1)
+        pause(minutes=30)
