@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS flights;
+CREATE DATABASE IF NOT EXISTS ryanair;
 
-USE flights;
+USE ryanair;
 
 CREATE TABLE IF NOT EXISTS flights (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS flights (
     departure VARCHAR(50) NOT NULL,
     arrival VARCHAR(50) NOT NULL,
     flight_date DATE NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,  
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
