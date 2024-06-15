@@ -66,7 +66,8 @@ def get_flight_info(driver):
             info["flight_origin"] = flight["segments"][0]["origin"]
             info["flight_destination"] = flight["segments"][0]["destination"]
             info["flight_duration"] = flight["segments"][0]["duration"]
-            
+
+
 #     return info
 def parse_date_input(argv):
     day = int(argv[0])
@@ -142,3 +143,4 @@ if __name__ == "__main__":
         insert_data(conn, data)
         print(f"Price: {price}, Flight number: {flight_number} inserted into the database")
         pauseMinutes(40)
+

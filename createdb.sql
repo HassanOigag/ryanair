@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS flights;
+
+USE flights;
+
+CREATE TABLE IF NOT EXISTS flights (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_number VARCHAR(50) NOT NULL,
+    departure VARCHAR(50) NOT NULL,
+    arrival VARCHAR(50) NOT NULL,
+    flight_date DATE NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
