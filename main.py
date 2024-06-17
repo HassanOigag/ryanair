@@ -124,23 +124,32 @@ def pauseMinutes(minutes):
 
 
 if __name__ == "__main__":
-    if len(argv) != 6:
-        print("Usage: python main.py day month year from to")
-        exit(1)
-    frm = argv[4].upper()
-    to = argv[5].upper()
-    date = parse_date_input(argv[1:4])
-    conn  = connect_to_db(db_config)
-    bot.send_message(CHAT_ID, f"Bot started listening for date {date} from {frm} to {to}")
-    while True:
-        print("got price from site")
-        price, flight_number = get_flight_price(date, frm=frm, to=to)
-        print("checking if price has changed")
-        last_price_added = get_latest_flight_price(conn, date, frm=frm, to=to)
-        if last_price_added != float(price):
-            bot.send_message(CHAT_ID, f"Price has changed from {last_price_added} to {price} for flight {flight_number} on {date}")
-        data = (flight_number, frm, to, date, price)
-        insert_data(conn, data)
-        print(f"Price: {price}, Flight number: {flight_number} inserted into the database")
-        pauseMinutes(40)
+    try:
+        if len(argv) != 6:
+            print("Usage: python main.py day month year from to")
+            exit(1)
+        frm = argv[4].upper()
+        to = argv[5].upper()
+        date = parse_date_input(argv[1:4])
+        conn  = connect_to_db(db_config)
+        bot.send_message(CHAT_ID, f"Bot started listening for date {date} from {frm} to {to}")
+        while True:
+            print("got price from site")
+            price, flight_number = get_flight_price(date, frm=frm, to=to)
+            print("checking if price has changed")
+            last_price_added = get_latest_flight_price(conn, date, frm=frm, to=to)
+            if last_price_added != float(price):
+                bot.send_message(CHAT_ID, f"Price has changed from {last_price_added} to {price} for flight {flight_number} on {date}")
+            data = (flight_number, frm, to, date, price)
+            insert_data(conn, data)
+            print(f"Price: {price}, Flight number: {flight_number} inserted into the database")
+            pauseMinutes(40)
+    except KeyboardInterrupt:
+        print("Exiting")
+        conn.close()
+        bot.send_message(CHAT_ID, "Exiting")
+    except Exception as e:
+        print(e)
+        conn.close()
+        bot.send_message(CHAT_ID, f"Error: something went wrong")
 
